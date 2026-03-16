@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lottery Number Generator</title>
+    <title>Sam's Lotto Generator<</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,9 +12,15 @@
         <div class="toolbar">
             <button id="theme-toggle" type="button" aria-label="Switch theme">Dark Mode</button>
         </div>
-        <h1>Lottery Number Generator</h1>
-        <div id="lottery-numbers" class="lottery-numbers-container"></div>
-        <button id="generate-btn">Generate Numbers</button>
+        <header class="hero">
+            <p class="eyebrow">Lucky Picks</p>
+            <h1>Lottery Number Generator</h1>
+            <p class="intro">Generate 5 ready-to-play number sets in one click.</p>
+        </header>
+        <div class="actions">
+            <button id="generate-btn" type="button">Generate 5 Sets</button>
+        </div>
+        <section id="lottery-numbers" class="lottery-numbers-container" aria-live="polite"></section>
     </div>
     <script src="main.js"></script>
 </body>

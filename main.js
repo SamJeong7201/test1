@@ -56,6 +56,9 @@ const generateBtn = document.getElementById('generate-btn');
 const themeToggleBtn = document.getElementById('theme-toggle');
 const lotteryNumbersContainer = document.getElementById('lottery-numbers');
 const themeStorageKey = 'theme-preference';
+const setsToGenerate = 5;
+const numbersPerSet = 6;
+const maxLotteryNumber = 45;
 
 function getPreferredTheme() {
     const storedTheme = localStorage.getItem(themeStorageKey);
@@ -84,17 +87,60 @@ themeToggleBtn.addEventListener('click', () => {
     applyTheme(nextTheme);
 });
 
-generateBtn.addEventListener('click', () => {
-    lotteryNumbersContainer.innerHTML = '';
+function createNumberSet() {
     const numbers = new Set();
-    while(numbers.size < 6) {
-        numbers.add(Math.floor(Math.random() * 45) + 1);
+
+    while (numbers.size < numbersPerSet) {
+        numbers.add(Math.floor(Math.random() * maxLotteryNumber) + 1);
     }
 
-    [...numbers].sort((a, b) => a - b).forEach((number, index) => {
-        const ball = document.createElement('lottery-ball');
-        ball.setAttribute('number', number);
-        ball.setAttribute('delay', `${index * 0.1}s`);
-        lotteryNumbersContainer.appendChild(ball);
-    });
+    return [...numbers].sort((a, b) => a - b);
+}
+
+function renderTickets() {
+    lotteryNumbersContainer.innerHTML = '';
+
+    for (let setIndex = 0; setIndex < setsToGenerate; setIndex += 1) {
+        const ticket = document.createElement('article');
+        ticket.className = 'ticket';
+
+        const header = document.createElement('div');
+        header.className = 'ticket-header';
+
+        const titleGroup = document.createElement('div');
+        const title = document.createElement('h2');
+        title.className = 'ticket-title';
+        title.textContent = `Quick Pick ${setIndex + 1}`;
+
+        const subtitle = document.createElement('p');
+        subtitle.className = 'ticket-subtitle';
+        subtitle.textContent = '6 numbers from 1 to 45';
+
+        titleGroup.append(title, subtitle);
+
+        const badge = document.createElement('span');
+        badge.className = 'ticket-badge';
+        badge.textContent = 'Ready';
+
+        header.append(titleGroup, badge);
+
+        const ballRow = document.createElement('div');
+        ballRow.className = 'ball-row';
+
+        createNumberSet().forEach((number, numberIndex) => {
+            const ball = document.createElement('lottery-ball');
+            ball.setAttribute('number', number);
+            ball.setAttribute('delay', `${setIndex * 0.08 + numberIndex * 0.06}s`);
+            ballRow.appendChild(ball);
+        });
+
+        ticket.append(header, ballRow);
+        lotteryNumbersContainer.appendChild(ticket);
+    }
+}
+
+generateBtn.addEventListener('click', () => {
+    renderTickets();
 });
+
+renderTickets();
