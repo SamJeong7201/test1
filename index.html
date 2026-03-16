@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sam's Lotto Generator<</title>
+    <title>Sam's Lotto Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,6 +21,37 @@
             <button id="generate-btn" type="button">Generate 5 Sets</button>
         </div>
         <section id="lottery-numbers" class="lottery-numbers-container" aria-live="polite"></section>
+        <section class="contact-panel" aria-labelledby="partnership-title">
+            <div class="contact-copy">
+                <p class="eyebrow">Partnership</p>
+                <h2 id="partnership-title">제휴 문의</h2>
+                <p class="contact-intro">광고, 제휴, 협업 관련 문의를 남겨주시면 확인 후 답변드리겠습니다.</p>
+            </div>
+            <form
+                class="partnership-form"
+                action="https://formspree.io/f/mreyyobg"
+                method="POST"
+            >
+                <label class="form-field">
+                    <span>이름</span>
+                    <input type="text" name="name" placeholder="홍길동" required>
+                </label>
+                <label class="form-field">
+                    <span>이메일</span>
+                    <input type="email" name="email" placeholder="name@example.com" required>
+                </label>
+                <label class="form-field">
+                    <span>회사명</span>
+                    <input type="text" name="company" placeholder="회사 또는 브랜드명">
+                </label>
+                <label class="form-field">
+                    <span>문의 내용</span>
+                    <textarea name="message" rows="5" placeholder="제휴 제안 내용을 입력해주세요." required></textarea>
+                </label>
+                <input type="hidden" name="_subject" value="새 제휴 문의가 도착했습니다">
+                <button class="submit-btn" type="submit">문의 보내기</button>
+            </form>
+        </section>
     </div>
     <script src="main.js"></script>
 </body>
