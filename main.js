@@ -53,7 +53,36 @@ class LotteryBall extends HTMLElement {
 customElements.define('lottery-ball', LotteryBall);
 
 const generateBtn = document.getElementById('generate-btn');
+const themeToggleBtn = document.getElementById('theme-toggle');
 const lotteryNumbersContainer = document.getElementById('lottery-numbers');
+const themeStorageKey = 'theme-preference';
+
+function getPreferredTheme() {
+    const storedTheme = localStorage.getItem(themeStorageKey);
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+        return storedTheme;
+    }
+
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function updateThemeLabel(theme) {
+    themeToggleBtn.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    themeToggleBtn.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+}
+
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    updateThemeLabel(theme);
+}
+
+applyTheme(getPreferredTheme());
+
+themeToggleBtn.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme);
+});
 
 generateBtn.addEventListener('click', () => {
     lotteryNumbersContainer.innerHTML = '';

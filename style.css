@@ -3,16 +3,33 @@
 
 @layer base {
     :root {
+        color-scheme: dark;
         --background-color: oklch(20% 0.05 240);
         --text-color: oklch(95% 0.05 240);
         --primary-color: oklch(70% 0.2 280);
         --secondary-color: oklch(85% 0.2 320);
         --accent-color: oklch(75% 0.25 150);
-
-        --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        --panel-color: oklch(25% 0.05 240 / 0.5);
+        --button-text-color: oklch(20% 0.05 240);
+        --pattern-stroke: rgb(255 255 255 / 0.05);
+        --font-family: "Segoe UI", system-ui, sans-serif;
 
         --shadow-color: 220 3% 5%;
         --shadow-strength: .02;
+    }
+
+    :root[data-theme="light"] {
+        color-scheme: light;
+        --background-color: oklch(96% 0.015 240);
+        --text-color: oklch(28% 0.03 240);
+        --primary-color: oklch(58% 0.2 285);
+        --secondary-color: oklch(70% 0.18 330);
+        --accent-color: oklch(68% 0.2 155);
+        --panel-color: oklch(100% 0 0 / 0.72);
+        --button-text-color: oklch(98% 0.01 240);
+        --pattern-stroke: rgb(31 41 55 / 0.08);
+        --shadow-color: 220 20% 30%;
+        --shadow-strength: .08;
     }
 
     body {
@@ -23,15 +40,24 @@
         place-content: center;
         min-height: 100vh;
         margin: 0;
-        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="rgb(255 255 255 / 0.05)"%3E%3Cpath d="M0 .5 L31.5 .5 M.5 0 L.5 31.5"/%3E%3C/svg%3E');
+        padding: 1.5rem;
+        transition: background-color 0.25s ease, color 0.25s ease;
+        background-image:
+            radial-gradient(circle at top, oklch(55% 0.18 290 / 0.18), transparent 40%),
+            radial-gradient(circle at bottom right, oklch(80% 0.2 150 / 0.18), transparent 35%),
+            linear-gradient(var(--pattern-stroke) 1px, transparent 1px),
+            linear-gradient(90deg, var(--pattern-stroke) 1px, transparent 1px);
+        background-size: auto, auto, 32px 32px, 32px 32px;
     }
 
     .container {
         text-align: center;
         padding: 2rem;
-        background: oklch(25% 0.05 240 / 0.5);
+        width: min(100%, 34rem);
+        background: var(--panel-color);
         border-radius: 1rem;
         backdrop-filter: blur(10px);
+        transition: background-color 0.25s ease, box-shadow 0.25s ease;
         box-shadow: 
             0 1px 1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
             0 2px 2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
@@ -40,10 +66,16 @@
             0 16px 16px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
     }
 
+    .toolbar {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+
     h1 {
         font-size: clamp(2rem, 5vw, 3rem);
         color: var(--primary-color);
-        text-shadow: 0 0 10px oklch(var(--primary-color) / 0.5);
+        text-shadow: 0 0 10px color-mix(in oklab, var(--primary-color) 55%, transparent);
     }
 
     .lottery-numbers-container {
@@ -54,25 +86,42 @@
         margin-block: 2rem;
     }
 
-    #generate-btn {
+    #generate-btn,
+    #theme-toggle {
         font-size: 1.2rem;
         padding: 0.8em 1.5em;
         border: none;
         border-radius: 0.5rem;
         background-color: var(--accent-color);
-        color: var(--background-color);
+        color: var(--button-text-color);
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 
-            0 0 10px oklch(var(--accent-color) / 0.5),
-            0 0 20px oklch(var(--accent-color) / 0.3);
+            0 0 10px color-mix(in oklab, var(--accent-color) 50%, transparent),
+            0 0 20px color-mix(in oklab, var(--accent-color) 30%, transparent);
     }
 
-    #generate-btn:hover {
+    #generate-btn:hover,
+    #theme-toggle:hover {
         transform: translateY(-3px);
         box-shadow: 
-            0 0 15px oklch(var(--accent-color) / 0.7),
-            0 0 30px oklch(var(--accent-color) / 0.5);
+            0 0 15px color-mix(in oklab, var(--accent-color) 70%, transparent),
+            0 0 30px color-mix(in oklab, var(--accent-color) 50%, transparent);
+    }
+
+    #theme-toggle {
+        font-size: 0.95rem;
+        padding: 0.65em 1em;
+    }
+
+    @media (max-width: 640px) {
+        body {
+            padding: 1rem;
+        }
+
+        .container {
+            padding: 1.5rem;
+        }
     }
 }
 
