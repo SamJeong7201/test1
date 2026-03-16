@@ -1,1 +1,85 @@
-/* Add styles here */
+
+@layer base, components;
+
+@layer base {
+    :root {
+        --background-color: oklch(20% 0.05 240);
+        --text-color: oklch(95% 0.05 240);
+        --primary-color: oklch(70% 0.2 280);
+        --secondary-color: oklch(85% 0.2 320);
+        --accent-color: oklch(75% 0.25 150);
+
+        --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        --shadow-color: 220 3% 5%;
+        --shadow-strength: .02;
+    }
+
+    body {
+        font-family: var(--font-family);
+        background-color: var(--background-color);
+        color: var(--text-color);
+        display: grid;
+        place-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="rgb(255 255 255 / 0.05)"%3E%3Cpath d="M0 .5 L31.5 .5 M.5 0 L.5 31.5"/%3E%3C/svg%3E');
+    }
+
+    .container {
+        text-align: center;
+        padding: 2rem;
+        background: oklch(25% 0.05 240 / 0.5);
+        border-radius: 1rem;
+        backdrop-filter: blur(10px);
+        box-shadow: 
+            0 1px 1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
+            0 2px 2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
+            0 4px 4px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
+            0 8px 8px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
+            0 16px 16px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
+    }
+
+    h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        color: var(--primary-color);
+        text-shadow: 0 0 10px oklch(var(--primary-color) / 0.5);
+    }
+
+    .lottery-numbers-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-block: 2rem;
+    }
+
+    #generate-btn {
+        font-size: 1.2rem;
+        padding: 0.8em 1.5em;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: var(--accent-color);
+        color: var(--background-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 
+            0 0 10px oklch(var(--accent-color) / 0.5),
+            0 0 20px oklch(var(--accent-color) / 0.3);
+    }
+
+    #generate-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 
+            0 0 15px oklch(var(--accent-color) / 0.7),
+            0 0 30px oklch(var(--accent-color) / 0.5);
+    }
+}
+
+@layer components {
+    lottery-ball {
+        --ball-size: clamp(50px, 10vw, 80px);
+        width: var(--ball-size);
+        height: var(--ball-size);
+    }
+}
